@@ -1,4 +1,16 @@
 <script setup>
+import {reactive, ref} from 'vue'
+import Alerta from './Alerta.vue'
+
+
+const busqueda = reactive({
+    ciudad: '',
+    pais: ''
+})
+
+const error = ref('')
+
+const emit = defineEmits(['obtener-clima'])
 
 const paises = [
     { codigo: 'US', nombre: 'Estados Unidos' },
@@ -10,17 +22,31 @@ const paises = [
     { codigo: 'PE', nombre: 'Perú' }
 ]
 
+const consultarClima = () => {
+    if (Object.values(busqueda).includes('')) {
+        error.value = 'Todos los campos son obligatorios'
+        setTimeout(() => {
+            error.value = ''
+        }, 2000)
+        return
+    } else {
+        error.value = ''
+        emit('obtener-clima',busqueda)
+    }
+}
+
 </script>
 <template>
-    <form class="formulario">
+    <form class="formulario" @submit.prevent="consultarClima">
+        <Alerta v-if="error">{{ error }}</Alerta>
         <div class="campo">
             <label for="ciudad">Ciudad</label>
-            <input type="text" id="ciudad" placeholder="Ciudad">
+            <input type="text" id="ciudad" v-model="busqueda.ciudad" placeholder="Ciudad">
         </div>
 
         <div class="campo">
             <label for="pais">País</label>
-            <select id="pais">
+            <select id="pais" v-model="busqueda.pais">
                 <option value="">-- Seleccione un País --</option>
                 <option v-for="pais in paises" :key="pais.codigo" :value="pais.codigo">{{ pais.nombre }}</option>
             </select>
