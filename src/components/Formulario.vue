@@ -19,7 +19,10 @@ const paises = [
     { codigo: 'CO', nombre: 'Colombia' },
     { codigo: 'CR', nombre: 'Costa Rica' },
     { codigo: 'ES', nombre: 'España' },
-    { codigo: 'PE', nombre: 'Perú' }
+    { codigo: 'PE', nombre: 'Perú' },
+    { codigo: 'RU', nombre: 'Rusia' },
+    { codigo: 'VE', nombre: 'Venezuela' },
+    { codigo: 'BO', nombre: 'Bolivia' }
 ]
 
 const consultarClima = () => {
